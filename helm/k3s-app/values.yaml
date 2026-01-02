@@ -12,7 +12,7 @@ frontend:
   replicaCount: 2
   
   image:
-    repository: dfanso/k3s-frontend
+    repository: lance-mao/k3s-frontend
     tag: latest
     pullPolicy: Always
   
@@ -34,7 +34,7 @@ api:
   replicaCount: 2
   
   image:
-    repository: dfanso/k3s-api
+    repository: lance-mao/core-api
     tag: latest
     pullPolicy: Always
   
@@ -247,7 +247,7 @@ rpc:
   replicaCount: 2
 
   image:
-    repository: dfanso/core-rpc
+    repository: lance-mao/core-rpc
     tag: latest
     pullPolicy: Always
 

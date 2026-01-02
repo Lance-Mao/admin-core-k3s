@@ -17,7 +17,7 @@ ENV TZ=Asia/Shanghai
 RUN apk update --no-cache && apk add --no-cache tzdata
 
 COPY ./${PROJECT}_rpc ./
-COPY ./rpc/etc/${CONFIG_FILE} ./etc/
+COPY ./app/rpc/etc/${CONFIG_FILE} ./etc/
 
 EXPOSE 9101
 

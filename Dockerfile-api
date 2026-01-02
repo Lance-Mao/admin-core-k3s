@@ -17,8 +17,8 @@ ENV TZ=Asia/Shanghai
 RUN apk update --no-cache && apk add --no-cache tzdata
 
 COPY ./${PROJECT}_api ./
-COPY ./api/etc/${CONFIG_FILE} ./etc/
-COPY ./api/internal/i18n/locale/ ./etc/locale/
+COPY ./app/api/etc/${CONFIG_FILE} ./etc/
+COPY ./app/api/internal/i18n/locale/ ./etc/locale/
 
 EXPOSE 9100
 
