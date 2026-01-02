@@ -304,7 +304,7 @@ secrets:
 
 # Monitoring Configuration (updated)
 monitoring:
-  enabled: true
+  enabled: false  # Set to true after installing Prometheus Operator CRDs
   serviceMonitor:
     enabled: true
     interval: 30s
