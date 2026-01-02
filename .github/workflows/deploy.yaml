@@ -38,6 +38,13 @@ jobs:
       - name: Set lowercase owner name
         run: echo "OWNER_LC=${GITHUB_REPOSITORY_OWNER,,}" >> $GITHUB_ENV
 
+      - name: Copy api and rpc to root (for Go module compatibility)
+        if: matrix.service == 'api' || matrix.service == 'rpc'
+        run: |
+          cp -r app/api api
+          cp -r app/rpc rpc
+          ls -la | grep -E "api|rpc"
+
       - name: Log in to Container Registry
         uses: docker/login-action@v3
         with:
