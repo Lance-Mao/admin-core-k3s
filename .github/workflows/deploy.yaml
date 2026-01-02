@@ -45,6 +45,28 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Install pnpm (for Frontend)
+        if: matrix.service == 'frontend'
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Set up Node.js (for Frontend)
+        if: matrix.service == 'frontend'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+          cache-dependency-path: ${{ matrix.context }}/pnpm-lock.yaml
+
+      - name: Build Frontend
+        if: matrix.service == 'frontend'
+        run: |
+          cd ${{ matrix.context }}
+          pnpm install
+          pnpm build:simple-admin-core
+          ls -la apps/simple-admin-core/dist/
+
       - name: Set up Go (for API/RPC)
         if: matrix.service == 'api' || matrix.service == 'rpc'
         uses: actions/setup-go@v5

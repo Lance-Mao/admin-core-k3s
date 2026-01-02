@@ -24,3 +24,7 @@ kubeconfig.yaml
 
 # Helm
 *.tgz
+
+# Copied directories (duplicates of app/api and app/rpc for Go module compatibility)
+/api
+/rpc
