@@ -85,7 +85,7 @@ jobs:
       - name: Build Go binary
         if: matrix.service == 'api' || matrix.service == 'rpc'
         run: |
-          CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o core_${{ matrix.service }} ${{ matrix.context }}/core.go
+          CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o core_${{ matrix.service }} ./${{ matrix.service }}/core.go
           ls -lh core_${{ matrix.service }}
 
       - name: Extract metadata
