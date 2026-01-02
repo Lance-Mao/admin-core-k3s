@@ -4,10 +4,10 @@ import (
 	"flag"
 	"fmt"
 
-	"github.com/suyuan32/simple-admin-core/rpc/internal/config"
-	"github.com/suyuan32/simple-admin-core/rpc/internal/server"
-	"github.com/suyuan32/simple-admin-core/rpc/internal/svc"
-	"github.com/suyuan32/simple-admin-core/rpc/types/core"
+	"github.com/Lance-Mao/admin-core-k3s/app/rpc/internal/config"
+	"github.com/Lance-Mao/admin-core-k3s/app/rpc/internal/server"
+	"github.com/Lance-Mao/admin-core-k3s/app/rpc/internal/svc"
+	"github.com/Lance-Mao/admin-core-k3s/app/rpc/types/core"
 
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/core/service"

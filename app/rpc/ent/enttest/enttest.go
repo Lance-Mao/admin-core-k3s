@@ -5,12 +5,12 @@ package enttest
 import (
 	"context"
 
-	"github.com/suyuan32/simple-admin-core/rpc/ent"
+	"github.com/Lance-Mao/admin-core-k3s/app/rpc/ent"
 	// required by schema hooks.
-	_ "github.com/suyuan32/simple-admin-core/rpc/ent/runtime"
+	_ "github.com/Lance-Mao/admin-core-k3s/app/rpc/ent/runtime"
 
 	"entgo.io/ent/dialect/sql/schema"
-	"github.com/suyuan32/simple-admin-core/rpc/ent/migrate"
+	"github.com/Lance-Mao/admin-core-k3s/app/rpc/ent/migrate"
 )
 
 type (

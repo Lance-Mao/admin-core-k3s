@@ -9,7 +9,7 @@ import (
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
-	"github.com/suyuan32/simple-admin-core/rpc/ent/dictionary"
+	"github.com/Lance-Mao/admin-core-k3s/app/rpc/ent/dictionary"
 )
 
 // Dictionary Table | 字典信息表

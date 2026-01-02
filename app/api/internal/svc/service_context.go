@@ -8,10 +8,10 @@ import (
 	"github.com/suyuan32/simple-admin-job/jobclient"
 	"github.com/suyuan32/simple-admin-message-center/mcmsclient"
 
-	"github.com/suyuan32/simple-admin-core/api/internal/config"
-	i18n2 "github.com/suyuan32/simple-admin-core/api/internal/i18n"
-	"github.com/suyuan32/simple-admin-core/api/internal/middleware"
-	"github.com/suyuan32/simple-admin-core/rpc/coreclient"
+	"github.com/Lance-Mao/admin-core-k3s/app/api/internal/config"
+	i18n2 "github.com/Lance-Mao/admin-core-k3s/app/api/internal/i18n"
+	"github.com/Lance-Mao/admin-core-k3s/app/api/internal/middleware"
+	"github.com/Lance-Mao/admin-core-k3s/app/rpc/coreclient"
 
 	"github.com/casbin/casbin/v2"
 	"github.com/zeromicro/go-zero/rest"

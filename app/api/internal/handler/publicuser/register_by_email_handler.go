@@ -5,9 +5,9 @@ import (
 
 	"github.com/zeromicro/go-zero/rest/httpx"
 
-	"github.com/suyuan32/simple-admin-core/api/internal/logic/publicuser"
-	"github.com/suyuan32/simple-admin-core/api/internal/svc"
-	"github.com/suyuan32/simple-admin-core/api/internal/types"
+	"github.com/Lance-Mao/admin-core-k3s/app/api/internal/logic/publicuser"
+	"github.com/Lance-Mao/admin-core-k3s/app/api/internal/svc"
+	"github.com/Lance-Mao/admin-core-k3s/app/api/internal/types"
 )
 
 // swagger:route post /user/register_by_email publicuser RegisterByEmail

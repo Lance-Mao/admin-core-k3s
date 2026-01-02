@@ -9,7 +9,7 @@ import (
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
-	"github.com/suyuan32/simple-admin-core/rpc/ent/menu"
+	"github.com/Lance-Mao/admin-core-k3s/app/rpc/ent/menu"
 )
 
 // Menu Table | 菜单表

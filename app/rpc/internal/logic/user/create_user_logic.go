@@ -6,10 +6,10 @@ import (
 	"github.com/suyuan32/simple-admin-common/utils/encrypt"
 	"github.com/suyuan32/simple-admin-common/utils/pointy"
 
-	"github.com/suyuan32/simple-admin-core/rpc/ent/user"
-	"github.com/suyuan32/simple-admin-core/rpc/internal/svc"
-	"github.com/suyuan32/simple-admin-core/rpc/internal/utils/dberrorhandler"
-	"github.com/suyuan32/simple-admin-core/rpc/types/core"
+	"github.com/Lance-Mao/admin-core-k3s/app/rpc/ent/user"
+	"github.com/Lance-Mao/admin-core-k3s/app/rpc/internal/svc"
+	"github.com/Lance-Mao/admin-core-k3s/app/rpc/internal/utils/dberrorhandler"
+	"github.com/Lance-Mao/admin-core-k3s/app/rpc/types/core"
 
 	"github.com/suyuan32/simple-admin-common/i18n"
 

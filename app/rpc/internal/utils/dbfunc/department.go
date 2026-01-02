@@ -8,12 +8,12 @@ import (
 	"github.com/suyuan32/simple-admin-common/utils/pointy"
 	"github.com/zeromicro/go-zero/core/logx"
 
-	"github.com/suyuan32/simple-admin-core/rpc/ent"
-	"github.com/suyuan32/simple-admin-core/rpc/internal/utils/dberrorhandler"
+	"github.com/Lance-Mao/admin-core-k3s/app/rpc/ent"
+	"github.com/Lance-Mao/admin-core-k3s/app/rpc/internal/utils/dberrorhandler"
 
 	"entgo.io/ent/dialect/sql"
 
-	"github.com/suyuan32/simple-admin-core/rpc/ent/department"
+	"github.com/Lance-Mao/admin-core-k3s/app/rpc/ent/department"
 )
 
 func GetDepartmentAncestors(departmentID *uint64, db *ent.Client, logger logx.Logger, ctx context.Context) (*string, error) {

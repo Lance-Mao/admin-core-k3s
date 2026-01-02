@@ -9,7 +9,7 @@ import (
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
-	"github.com/suyuan32/simple-admin-core/rpc/ent/position"
+	"github.com/Lance-Mao/admin-core-k3s/app/rpc/ent/position"
 )
 
 // Position Table | 职位信息表

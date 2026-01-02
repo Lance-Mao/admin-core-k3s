@@ -12,10 +12,10 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/Lance-Mao/admin-core-k3s/app/rpc/ent/position"
+	"github.com/Lance-Mao/admin-core-k3s/app/rpc/ent/predicate"
+	"github.com/Lance-Mao/admin-core-k3s/app/rpc/ent/user"
 	uuid "github.com/gofrs/uuid/v5"
-	"github.com/suyuan32/simple-admin-core/rpc/ent/position"
-	"github.com/suyuan32/simple-admin-core/rpc/ent/predicate"
-	"github.com/suyuan32/simple-admin-core/rpc/ent/user"
 )
 
 // PositionQuery is the builder for querying Position entities.

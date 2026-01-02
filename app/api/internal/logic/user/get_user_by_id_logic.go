@@ -3,9 +3,9 @@ package user
 import (
 	"context"
 
-	"github.com/suyuan32/simple-admin-core/api/internal/svc"
-	"github.com/suyuan32/simple-admin-core/api/internal/types"
-	"github.com/suyuan32/simple-admin-core/rpc/types/core"
+	"github.com/Lance-Mao/admin-core-k3s/app/api/internal/svc"
+	"github.com/Lance-Mao/admin-core-k3s/app/api/internal/types"
+	"github.com/Lance-Mao/admin-core-k3s/app/rpc/types/core"
 
 	"github.com/zeromicro/go-zero/core/logx"
 

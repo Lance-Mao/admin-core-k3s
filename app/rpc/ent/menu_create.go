@@ -10,8 +10,8 @@ import (
 
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/suyuan32/simple-admin-core/rpc/ent/menu"
-	"github.com/suyuan32/simple-admin-core/rpc/ent/role"
+	"github.com/Lance-Mao/admin-core-k3s/app/rpc/ent/menu"
+	"github.com/Lance-Mao/admin-core-k3s/app/rpc/ent/role"
 )
 
 // MenuCreate is the builder for creating a Menu entity.

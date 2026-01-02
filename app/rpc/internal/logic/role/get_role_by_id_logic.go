@@ -5,9 +5,9 @@ import (
 
 	"github.com/suyuan32/simple-admin-common/utils/pointy"
 
-	"github.com/suyuan32/simple-admin-core/rpc/internal/svc"
-	"github.com/suyuan32/simple-admin-core/rpc/internal/utils/dberrorhandler"
-	"github.com/suyuan32/simple-admin-core/rpc/types/core"
+	"github.com/Lance-Mao/admin-core-k3s/app/rpc/internal/svc"
+	"github.com/Lance-Mao/admin-core-k3s/app/rpc/internal/utils/dberrorhandler"
+	"github.com/Lance-Mao/admin-core-k3s/app/rpc/types/core"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

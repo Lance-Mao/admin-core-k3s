@@ -8,7 +8,7 @@ import (
 
 	"github.com/suyuan32/simple-admin-common/i18n"
 
-	"github.com/suyuan32/simple-admin-core/rpc/ent"
+	"github.com/Lance-Mao/admin-core-k3s/app/rpc/ent"
 )
 
 // DefaultEntError returns errors dealing with default functions.

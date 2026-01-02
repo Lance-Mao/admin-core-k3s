@@ -11,7 +11,7 @@ import (
 
 	"github.com/suyuan32/simple-admin-common/orm/ent/mixins"
 
-	mixins2 "github.com/suyuan32/simple-admin-core/rpc/ent/schema/mixins"
+	mixins2 "github.com/Lance-Mao/admin-core-k3s/app/rpc/ent/schema/mixins"
 )
 
 type User struct {

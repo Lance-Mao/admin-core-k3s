@@ -1,4 +1,4 @@
-module github.com/suyuan32/simple-admin-core
+module github.com/Lance-Mao/admin-core-k3s
 
 go 1.25.0
 

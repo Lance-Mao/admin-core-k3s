@@ -1,13 +1,13 @@
 package svc
 
 import (
+	"github.com/Lance-Mao/admin-core-k3s/app/rpc/ent"
+	"github.com/Lance-Mao/admin-core-k3s/app/rpc/internal/config"
 	"github.com/redis/go-redis/v9"
-	"github.com/suyuan32/simple-admin-core/rpc/ent"
-	"github.com/suyuan32/simple-admin-core/rpc/internal/config"
 
 	"github.com/zeromicro/go-zero/core/logx"
 
-	_ "github.com/suyuan32/simple-admin-core/rpc/ent/runtime"
+	_ "github.com/Lance-Mao/admin-core-k3s/app/rpc/ent/runtime"
 )
 
 type ServiceContext struct {

@@ -6,8 +6,8 @@ import (
 	"github.com/suyuan32/simple-admin-common/enum/errorcode"
 	"github.com/suyuan32/simple-admin-common/i18n"
 
-	"github.com/suyuan32/simple-admin-core/api/internal/svc"
-	"github.com/suyuan32/simple-admin-core/api/internal/types"
+	"github.com/Lance-Mao/admin-core-k3s/app/api/internal/svc"
+	"github.com/Lance-Mao/admin-core-k3s/app/api/internal/types"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

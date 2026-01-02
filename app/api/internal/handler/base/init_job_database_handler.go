@@ -5,8 +5,8 @@ import (
 
 	"github.com/zeromicro/go-zero/rest/httpx"
 
-	"github.com/suyuan32/simple-admin-core/api/internal/logic/base"
-	"github.com/suyuan32/simple-admin-core/api/internal/svc"
+	"github.com/Lance-Mao/admin-core-k3s/app/api/internal/logic/base"
+	"github.com/Lance-Mao/admin-core-k3s/app/api/internal/svc"
 )
 
 // swagger:route get /core/init/job_database base InitJobDatabase

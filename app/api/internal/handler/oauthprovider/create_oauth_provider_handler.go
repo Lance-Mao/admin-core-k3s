@@ -5,9 +5,9 @@ import (
 
 	"github.com/zeromicro/go-zero/rest/httpx"
 
-	"github.com/suyuan32/simple-admin-core/api/internal/logic/oauthprovider"
-	"github.com/suyuan32/simple-admin-core/api/internal/svc"
-	"github.com/suyuan32/simple-admin-core/api/internal/types"
+	"github.com/Lance-Mao/admin-core-k3s/app/api/internal/logic/oauthprovider"
+	"github.com/Lance-Mao/admin-core-k3s/app/api/internal/svc"
+	"github.com/Lance-Mao/admin-core-k3s/app/api/internal/types"
 )
 
 // swagger:route post /oauth_provider/create oauthprovider CreateOauthProvider
