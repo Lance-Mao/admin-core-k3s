@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls:*)",
+      "Bash(tree \"D:\\\\project\\\\learn\\\\simple-admin-core\" -L 2 -I \".git\")",
+      "Bash(tree:*)",
+      "Bash(wc:*)",
+      "Bash(cp:*)"
+    ]
+  }
+}

@@ -1,0 +1,93 @@
+{{- if .Values.rpc.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "k3s-app.rpc.name" . }}
+  labels:
+    {{- include "k3s-app.labels" . | nindent 4 }}
+    app.kubernetes.io/component: rpc
+spec:
+  replicas: {{ .Values.rpc.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "k3s-app.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: rpc
+  template:
+    metadata:
+      labels:
+        {{- include "k3s-app.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: rpc
+    spec:
+      serviceAccountName: {{ include "k3s-app.serviceAccountName" . }}
+      initContainers:
+        - name: wait-for-mysql
+          image: busybox:1.35
+          command:
+            - sh
+            - -c
+            - |
+              until nc -z {{ include "k3s-app.mysql.name" . }} 3306; do
+                echo "Waiting for MySQL..."
+                sleep 2
+              done
+              echo "MySQL is ready!"
+      containers:
+        - name: rpc
+          image: "{{ .Values.global.imageRegistry }}/{{ .Values.rpc.image.repository }}:{{ .Values.rpc.image.tag }}"
+          imagePullPolicy: {{ .Values.rpc.image.pullPolicy }}
+          ports:
+            - name: grpc
+              containerPort: 9101
+              protocol: TCP
+            - name: prometheus
+              containerPort: 4001
+              protocol: TCP
+          env:
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "k3s-app.fullname" . }}-secret
+                  key: mysql-username
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "k3s-app.fullname" . }}-secret
+                  key: mysql-password
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "k3s-app.fullname" . }}-secret
+                  key: jwt-access-secret
+            {{- if .Values.redis.auth.enabled }}
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "k3s-app.fullname" . }}-secret
+                  key: redis-password
+            {{- end }}
+          livenessProbe:
+            tcpSocket:
+              port: grpc
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          readinessProbe:
+            tcpSocket:
+              port: grpc
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          volumeMounts:
+            - name: config
+              mountPath: /app/etc/core.yaml
+              subPath: rpc-config.yaml
+            - name: logs
+              mountPath: /home/data/logs
+          resources:
+            {{- toYaml .Values.rpc.resources | nindent 12 }}
+      volumes:
+        - name: config
+          configMap:
+            name: {{ include "k3s-app.fullname" . }}-config
+        - name: logs
+          persistentVolumeClaim:
+            claimName: {{ include "k3s-app.fullname" . }}-logs-pvc
+{{- end }}

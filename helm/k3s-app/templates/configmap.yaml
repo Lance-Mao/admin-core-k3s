@@ -1,0 +1,152 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "k3s-app.fullname" . }}-config
+  labels:
+    {{- include "k3s-app.labels" . | nindent 4 }}
+data:
+  api-config.yaml: |
+    Name: core.api
+    Host: 0.0.0.0
+    Port: 9100
+    Timeout: {{ .Values.api.config.timeout | default 6000 }}
+
+    Auth:
+      AccessSecret: ${JWT_SECRET}
+      AccessExpire: {{ .Values.api.config.accessExpire | default 259200 }}
+
+    Log:
+      ServiceName: coreApiLogger
+      Mode: file
+      Path: /home/data/logs/core/api
+      Level: {{ .Values.api.config.logLevel | default "info" }}
+      Compress: false
+      KeepDays: {{ .Values.api.config.logKeepDays | default 7 }}
+      StackCoolDownMillis: 100
+
+    Captcha:
+      KeyLong: {{ .Values.api.config.captchaKeyLong | default 5 }}
+      ImgWidth: 240
+      ImgHeight: 80
+      Driver: digit
+
+    DatabaseConf:
+      Type: mysql
+      Host: {{ include "k3s-app.mysql.name" . }}
+      Port: 3306
+      DBName: {{ .Values.mysql.auth.database | default "simple_admin" }}
+      Username: ${DB_USERNAME}
+      Password: ${DB_PASSWORD}
+      MaxOpenConn: {{ .Values.api.config.dbMaxOpenConn | default 100 }}
+      SSLMode: disable
+      CacheTime: {{ .Values.api.config.cacheTime | default 5 }}
+
+    ProjectConf:
+      DefaultRoleId: {{ .Values.api.config.defaultRoleId | default 1 }}
+      DefaultRegisterHomePath: '/dashboard'
+      DefaultDepartmentId: {{ .Values.api.config.defaultDepartmentId | default 1 }}
+      DefaultPositionId: {{ .Values.api.config.defaultPositionId | default 1 }}
+      EmailCaptchaExpiredTime: 600
+      SmsTemplateId: xxx
+      SmsAppId: xxx
+      SmsSignName: xxx
+      SmsParamsType: json
+      RegisterVerify: captcha
+      LoginVerify: captcha
+      ResetVerify: email
+      AllowInit: {{ .Values.api.config.allowInit | default true }}
+      RefreshTokenPeriod: 24
+      AccessTokenPeriod: 1
+
+    Prometheus:
+      Host: 0.0.0.0
+      Port: 4000
+      Path: /metrics
+
+    CasbinConf:
+      ModelText: |
+        [request_definition]
+        r = sub, obj, act
+        [policy_definition]
+        p = sub, obj, act
+        [role_definition]
+        g = _, _
+        [policy_effect]
+        e = some(where (p.eft == allow))
+        [matchers]
+        m = r.sub == p.sub && keyMatch2(r.obj,p.obj) && r.act == p.act
+
+    I18nConf:
+      Dir:
+
+    CROSConf:
+      Address: '*'
+
+    RedisConf:
+      Host: {{ include "k3s-app.redis.name" . }}:6379
+      Db: 0
+      {{- if .Values.redis.auth.enabled }}
+      Pass: ${REDIS_PASSWORD}
+      {{- end }}
+
+    CoreRpc:
+      Target: k8s://{{ .Release.Namespace }}/{{ include "k3s-app.rpc.name" . }}:9101
+      Enabled: true
+
+    JobRpc:
+      Target: k8s://{{ .Release.Namespace }}/job-rpc-svc:9105
+      Enabled: false
+
+    McmsRpc:
+      Target: k8s://{{ .Release.Namespace }}/mcms-rpc-svc:9106
+      Enabled: false
+      Timeout: 5000
+
+  rpc-config.yaml: |
+    Name: core.rpc
+    ListenOn: 0.0.0.0:9101
+
+    DatabaseConf:
+      Type: mysql
+      Host: {{ include "k3s-app.mysql.name" . }}
+      Port: 3306
+      DBName: {{ .Values.mysql.auth.database | default "simple_admin" }}
+      Username: ${DB_USERNAME}
+      Password: ${DB_PASSWORD}
+      MaxOpenConn: {{ .Values.rpc.config.dbMaxOpenConn | default 100 }}
+      SSLMode: disable
+      CacheTime: {{ .Values.rpc.config.cacheTime | default 5 }}
+
+    Log:
+      ServiceName: coreRpcLogger
+      Mode: file
+      Path: /home/data/logs/core/rpc
+      Encoding: json
+      Level: {{ .Values.rpc.config.logLevel | default "info" }}
+      Compress: false
+      KeepDays: {{ .Values.rpc.config.logKeepDays | default 7 }}
+      StackCoolDownMillis: 100
+
+    RedisConf:
+      Host: {{ include "k3s-app.redis.name" . }}:6379
+      {{- if .Values.redis.auth.enabled }}
+      Pass: ${REDIS_PASSWORD}
+      {{- end }}
+
+    Prometheus:
+      Host: 0.0.0.0
+      Port: 4001
+      Path: /metrics
+
+    CasbinConf:
+      ModelText: |
+        [request_definition]
+        r = sub, obj, act
+        [policy_definition]
+        p = sub, obj, act
+        [role_definition]
+        g = _, _
+        [policy_effect]
+        e = some(where (p.eft == allow))
+        [matchers]
+        m = r.sub == p.sub && keyMatch2(r.obj,p.obj) && r.act == p.act

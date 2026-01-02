@@ -1,0 +1,173 @@
+# Default values for k3s-app
+
+# Global settings
+global:
+  imageRegistry: ghcr.io
+  imagePullSecrets: []
+
+# Frontend configuration
+frontend:
+  enabled: true
+  replicaCount: 2
+  
+  image:
+    repository: dfanso/k3s-frontend
+    tag: latest
+    pullPolicy: Always
+  
+  service:
+    type: ClusterIP
+    port: 80
+  
+  resources:
+    requests:
+      memory: "32Mi"
+      cpu: "10m"
+    limits:
+      memory: "64Mi"
+      cpu: "50m"
+
+# API configuration
+api:
+  enabled: true
+  replicaCount: 2
+  
+  image:
+    repository: dfanso/k3s-api
+    tag: latest
+    pullPolicy: Always
+  
+  service:
+    type: ClusterIP
+    port: 8000
+  
+  env:
+    APP_VERSION: "1.0.0"
+    ENVIRONMENT: "production"
+    DEPLOY_COUNT: "1"
+  
+  resources:
+    requests:
+      memory: "64Mi"
+      cpu: "50m"
+    limits:
+      memory: "128Mi"
+      cpu: "100m"
+
+# Ingress configuration (nginx)
+# All traffic goes to frontend, frontend nginx proxies /api/ to backend
+ingress:
+  enabled: true
+  className: nginx
+  annotations: {}
+  # For SSL with cert-manager, uncomment and configure:
+  # annotations:
+  #   cert-manager.io/cluster-issuer: letsencrypt-prod
+  #   nginx.ingress.kubernetes.io/ssl-redirect: "true"
+  hosts:
+    - host: ""  # Empty for IP-based access, set your domain for SSL
+      paths:
+        - path: /
+          pathType: Prefix
+          service: frontend
+  # TLS configuration - uncomment for SSL
+  tls: []
+  # tls:
+  #   - secretName: k3s-app-tls
+  #     hosts:
+  #       - yourdomain.com
+
+# Pod disruption budget
+podDisruptionBudget:
+  enabled: false
+  minAvailable: 1
+
+# Autoscaling
+autoscaling:
+  enabled: false
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 80
+
+# Nginx Ingress Controller (as dependency)
+# Set to false if nginx-ingress is already installed on your cluster
+ingress-nginx:
+  enabled: false
+  controller:
+    service:
+      type: LoadBalancer
+    ingressClassResource:
+      name: nginx
+      enabled: true
+      default: true
+
+# Monitoring Stack (Prometheus + Grafana)
+monitoring:
+  enabled: false
+
+kube-prometheus-stack:
+  # Grafana configuration
+  grafana:
+    enabled: true
+    adminPassword: "admin123"  # Change this!
+    service:
+      type: NodePort
+      nodePort: 30030
+    ingress:
+      enabled: false
+    persistence:
+      enabled: false
+    dashboardProviders:
+      dashboardproviders.yaml:
+        apiVersion: 1
+        providers:
+          - name: 'default'
+            folder: ''
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/default
+  
+  # Prometheus configuration
+  prometheus:
+    enabled: true
+    prometheusSpec:
+      retention: 7d
+      resources:
+        requests:
+          memory: 256Mi
+          cpu: 100m
+        limits:
+          memory: 512Mi
+          cpu: 500m
+      storageSpec: {}
+    service:
+      type: NodePort
+      nodePort: 30090
+  
+  # AlertManager
+  alertmanager:
+    enabled: true
+    service:
+      type: NodePort
+      nodePort: 30093
+  
+  # Disable components not needed for small clusters
+  kubeEtcd:
+    enabled: false
+  kubeControllerManager:
+    enabled: false
+  kubeScheduler:
+    enabled: false
+  kubeProxy:
+    enabled: false
+  
+  # Node exporter for system metrics
+  nodeExporter:
+    enabled: true
+  
+  # Kube-state-metrics for K8s metrics
+  kubeStateMetrics:
+    enabled: true
+
