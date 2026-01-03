@@ -116,10 +116,7 @@ ingress-nginx:
       enabled: true
       default: true
 
-# Monitoring Stack (Prometheus + Grafana)
-monitoring:
-  enabled: false
-
+# Monitoring configuration moved to bottom (see line ~307)
 kube-prometheus-stack:
   # Grafana configuration
   grafana:
@@ -304,7 +301,7 @@ secrets:
 
 # Monitoring Configuration (updated)
 monitoring:
-  enabled: true
+  enabled: false  # Disabled - CRDs not installed in K3s cluster
   serviceMonitor:
     enabled: true
     interval: 30s
