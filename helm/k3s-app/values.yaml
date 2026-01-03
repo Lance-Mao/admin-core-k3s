@@ -282,7 +282,7 @@ rbac:
 # Persistent Storage Configuration
 persistence:
   logs:
-    enabled: true
+    enabled: false  # Disabled - local-path storage doesn't support ReadWriteMany
     size: 5Gi
     storageClass: ""  # Use global.storageClass
 
