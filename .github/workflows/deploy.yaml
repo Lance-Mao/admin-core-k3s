@@ -19,7 +19,7 @@ jobs:
       matrix:
         include:
           - context: ./app/ui
-            image: k3s-frontend
+            image: core-frontend
             dockerfile: ./app/ui/Dockerfile
             service: frontend
           - context: ./app/api
@@ -73,7 +73,7 @@ jobs:
         if: matrix.service == 'api' || matrix.service == 'rpc'
         uses: actions/setup-go@v5
         with:
-          go-version: '1.22'
+          go-version: '1.25'
           cache: true
           cache-dependency-path: go.sum
 
@@ -142,7 +142,7 @@ jobs:
           helm upgrade --install k3s-app ./helm/k3s-app \
             --namespace default \
             --set global.imageRegistry=${{ env.REGISTRY }} \
-            --set frontend.image.repository=${OWNER_LC}/k3s-frontend \
+            --set frontend.image.repository=${OWNER_LC}/core-frontend \
             --set frontend.image.tag=latest \
             --set api.image.repository=${OWNER_LC}/core-api \
             --set api.image.tag=latest \

@@ -76,7 +76,7 @@ git push
 GitHub creates container packages as **private** by default. K3s needs them public.
 
 1. Go to `https://github.com/dfanso?tab=packages`
-2. Click each package (`k3s-frontend`, `k3s-api`)
+2. Click each package (`core-frontend`, `core-api`, `core-rpc`)
 3. **Package settings** → **Danger Zone** → **Change visibility** → **Public**
 
 Then re-run the GitHub Action or push again.

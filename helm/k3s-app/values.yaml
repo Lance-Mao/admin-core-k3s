@@ -12,7 +12,7 @@ frontend:
   replicaCount: 2
   
   image:
-    repository: lance-mao/k3s-frontend
+    repository: lance-mao/core-frontend
     tag: latest
     pullPolicy: Always
   
