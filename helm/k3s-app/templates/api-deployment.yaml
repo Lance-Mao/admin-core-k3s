@@ -87,8 +87,10 @@ spec:
             - name: config
               mountPath: /app/etc/core.yaml
               subPath: api-config.yaml
+            {{- if .Values.persistence.logs.enabled }}
             - name: logs
               mountPath: /home/data/logs
+            {{- end }}
             - name: i18n
               mountPath: /app/etc/locale
           resources:
@@ -97,9 +99,11 @@ spec:
         - name: config
           configMap:
             name: {{ include "k3s-app.fullname" . }}-config
+        {{- if .Values.persistence.logs.enabled }}
         - name: logs
           persistentVolumeClaim:
             claimName: {{ include "k3s-app.fullname" . }}-logs-pvc
+        {{- end }}
         - name: i18n
           emptyDir: {}
 {{- end }}

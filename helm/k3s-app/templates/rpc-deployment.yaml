@@ -79,15 +79,19 @@ spec:
             - name: config
               mountPath: /app/etc/core.yaml
               subPath: rpc-config.yaml
+            {{- if .Values.persistence.logs.enabled }}
             - name: logs
               mountPath: /home/data/logs
+            {{- end }}
           resources:
             {{- toYaml .Values.rpc.resources | nindent 12 }}
       volumes:
         - name: config
           configMap:
             name: {{ include "k3s-app.fullname" . }}-config
+        {{- if .Values.persistence.logs.enabled }}
         - name: logs
           persistentVolumeClaim:
             claimName: {{ include "k3s-app.fullname" . }}-logs-pvc
+        {{- end }}
 {{- end }}
