@@ -139,6 +139,11 @@ func (l *InitDatabaseLogic) InitDatabase(_ *core.Empty) (*core.BaseResp, error) 
 		return errHandler(err)
 	}
 
+	err = l.insertUserRoleRelationData()
+	if err != nil {
+		return errHandler(err)
+	}
+
 	_ = l.svcCtx.Redis.Set(l.ctx, "INIT:DATABASE:STATE", "1", 24*time.Hour)
 	return &core.BaseResp{Msg: i18n.Success}, nil
 }
@@ -351,4 +356,48 @@ func (l *InitDatabaseLogic) insertPositionData() error {
 	} else {
 		return nil
 	}
+}
+
+// insert user-role relation to Casbin
+func (l *InitDatabaseLogic) insertUserRoleRelationData() error {
+	// get all users with their roles
+	users, err := l.svcCtx.DB.User.Query().WithRoles().All(l.ctx)
+	if err != nil {
+		logx.Errorw("failed to query users with roles", logx.Field("detail", err.Error()))
+		return errorx.NewInternalError(err.Error())
+	}
+
+	csb, err := l.svcCtx.Config.CasbinConf.NewCasbin(l.svcCtx.Config.DatabaseConf.Type,
+		l.svcCtx.Config.DatabaseConf.GetDSN())
+
+	if err != nil {
+		logx.Error("initialize casbin failed")
+		return errorx.NewInternalError(err.Error())
+	}
+
+	// add user-role grouping policies
+	var groupingPolicies [][]string
+	for _, user := range users {
+		if user.Edges.Roles != nil {
+			for _, role := range user.Edges.Roles {
+				// g, user_id, role_code
+				groupingPolicies = append(groupingPolicies, []string{user.ID.String(), role.Code})
+			}
+		}
+	}
+
+	if len(groupingPolicies) > 0 {
+		addResult, err := csb.AddGroupingPolicies(groupingPolicies)
+		if err != nil {
+			logx.Errorw("failed to add user-role grouping policies", logx.Field("detail", err.Error()))
+			return errorx.NewInternalError(err.Error())
+		}
+
+		if !addResult {
+			logx.Error("failed to add user-role grouping policies: addResult is false")
+			return errorx.NewInternalError("failed to add user-role grouping policies")
+		}
+	}
+
+	return nil
 }
