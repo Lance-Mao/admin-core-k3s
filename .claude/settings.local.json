@@ -44,7 +44,8 @@
       "Bash(sort:*)",
       "Bash(kubectl cluster-info:*)",
       "Bash(kubectl wait:*)",
-      "Bash(git check-ignore:*)"
+      "Bash(git check-ignore:*)",
+      "Bash(git pull:*)"
     ]
   }
 }
