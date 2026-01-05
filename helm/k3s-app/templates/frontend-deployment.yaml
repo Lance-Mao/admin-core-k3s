@@ -20,7 +20,11 @@ spec:
     spec:
       containers:
         - name: frontend
+          {{- if .Values.global.imageRegistry }}
           image: "{{ .Values.global.imageRegistry }}/{{ .Values.frontend.image.repository }}:{{ .Values.frontend.image.tag }}"
+          {{- else }}
+          image: "{{ .Values.frontend.image.repository }}:{{ .Values.frontend.image.tag }}"
+          {{- end }}
           imagePullPolicy: {{ .Values.frontend.image.pullPolicy }}
           ports:
             - name: http

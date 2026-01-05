@@ -33,7 +33,11 @@ spec:
               echo "MySQL is ready!"
       containers:
         - name: rpc
+          {{- if .Values.global.imageRegistry }}
           image: "{{ .Values.global.imageRegistry }}/{{ .Values.rpc.image.repository }}:{{ .Values.rpc.image.tag }}"
+          {{- else }}
+          image: "{{ .Values.rpc.image.repository }}:{{ .Values.rpc.image.tag }}"
+          {{- end }}
           imagePullPolicy: {{ .Values.rpc.image.pullPolicy }}
           ports:
             - name: grpc

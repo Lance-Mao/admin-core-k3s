@@ -33,7 +33,11 @@ spec:
               echo "RPC service is ready!"
       containers:
         - name: api
+          {{- if .Values.global.imageRegistry }}
           image: "{{ .Values.global.imageRegistry }}/{{ .Values.api.image.repository }}:{{ .Values.api.image.tag }}"
+          {{- else }}
+          image: "{{ .Values.api.image.repository }}:{{ .Values.api.image.tag }}"
+          {{- end }}
           imagePullPolicy: {{ .Values.api.image.pullPolicy }}
           ports:
             - name: http
