@@ -141,12 +141,11 @@ jobs:
         run: |
           helm upgrade --install k3s-app ./helm/k3s-app \
             --namespace default \
-            --set global.imageRegistry=${{ env.REGISTRY }} \
-            --set frontend.image.repository=${OWNER_LC}/core-frontend \
+            --set frontend.image.repository=${{ env.REGISTRY }}/${OWNER_LC}/core-frontend \
             --set frontend.image.tag=latest \
-            --set api.image.repository=${OWNER_LC}/core-api \
+            --set api.image.repository=${{ env.REGISTRY }}/${OWNER_LC}/core-api \
             --set api.image.tag=latest \
-            --set rpc.image.repository=${OWNER_LC}/core-rpc \
+            --set rpc.image.repository=${{ env.REGISTRY }}/${OWNER_LC}/core-rpc \
             --set rpc.image.tag=latest \
             --set secrets.mysql.rootPassword=${{ secrets.MYSQL_ROOT_PASSWORD }} \
             --set secrets.mysql.username=${{ secrets.MYSQL_USERNAME }} \
