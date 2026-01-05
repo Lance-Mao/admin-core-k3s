@@ -17,8 +17,9 @@ dependencies:
     version: "4.9.0"
     repository: "https://kubernetes.github.io/ingress-nginx"
     condition: ingress-nginx.enabled
-  - name: kube-prometheus-stack
-    version: "55.5.0"
-    repository: "https://prometheus-community.github.io/helm-charts"
-    condition: monitoring.enabled
+  # kube-prometheus-stack disabled - using separate monitoring installation
+  # - name: kube-prometheus-stack
+  #   version: "55.5.0"
+  #   repository: "https://prometheus-community.github.io/helm-charts"
+  #   condition: monitoring.enabled
 
