@@ -2,8 +2,8 @@
 
 # Global settings
 global:
-  imageRegistry: ghcr.io
-  imagePullSecrets: []
+  imagePullSecrets:
+    - ghcr-secret
   storageClass: "local-path"  # K3s default storage class
 
 # Frontend configuration
@@ -116,9 +116,84 @@ ingress-nginx:
       enabled: true
       default: true
 
-# Monitoring configuration
-# Note: kube-prometheus-stack is installed separately in 'monitoring' namespace
-# This chart no longer includes it as a dependency
+# Monitoring Stack (kube-prometheus-stack v80.10.0)
+kube-prometheus-stack:
+  enabled: true
+
+  # Prometheus configuration
+  prometheus:
+    enabled: true
+    prometheusSpec:
+      retention: 7d
+      image:
+        registry: quay.io
+        repository: prometheus/prometheus
+        tag: v3.8.1
+      resources:
+        requests:
+          memory: 256Mi
+          cpu: 100m
+        limits:
+          memory: 512Mi
+          cpu: 500m
+      storageSpec: {}
+      # Service monitors selector - will discover ServiceMonitors with this label
+      serviceMonitorSelector:
+        matchLabels:
+          release: k3s-app
+    service:
+      type: NodePort
+      nodePort: 30090
+
+  # AlertManager
+  alertmanager:
+    enabled: true
+    alertmanagerSpec:
+      image:
+        registry: quay.io
+        repository: prometheus/alertmanager
+        tag: v0.30.0
+    service:
+      type: NodePort
+      nodePort: 30093
+
+  # Grafana configuration
+  grafana:
+    enabled: true
+    adminPassword: "admin123"  # Change this in production!
+    image:
+      registry: docker.io
+      repository: grafana/grafana
+      tag: 11.5.1
+    service:
+      type: NodePort
+      nodePort: 30030
+    ingress:
+      enabled: false
+    persistence:
+      enabled: false
+
+  # Prometheus Operator
+  prometheusOperator:
+    image:
+      registry: quay.io
+      repository: prometheus-operator/prometheus-operator
+
+  # Disable components not available in K3s
+  kubeEtcd:
+    enabled: false
+  kubeControllerManager:
+    enabled: false
+  kubeScheduler:
+    enabled: false
+  kubeProxy:
+    enabled: false
+
+  # Enable metric collectors
+  nodeExporter:
+    enabled: true
+  kubeStateMetrics:
+    enabled: true
 
 # MySQL Database Configuration
 mysql:
@@ -236,10 +311,12 @@ secrets:
   redis:
     password: ""      # Optional: Only needed if redis.auth.enabled=true
 
-# Monitoring Configuration
-# ServiceMonitor for Prometheus (requires prometheus-operator CRDs)
+# Application Monitoring Configuration
+# Creates ServiceMonitors for API and RPC services
 monitoring:
   serviceMonitor:
-    enabled: true  # Enable if you have Prometheus Operator installed
+    enabled: true
     interval: 30s
-    namespace: monitoring  # Namespace where Prometheus is running
+    # Labels must match Prometheus serviceMonitorSelector
+    additionalLabels:
+      release: k3s-app
