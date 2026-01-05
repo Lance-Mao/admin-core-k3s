@@ -16,7 +16,7 @@ A complete Kubernetes deployment setup with automated CI/CD using GitHub Actions
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 ![Let's Encrypt](https://img.shields.io/badge/Let's_Encrypt-003A70?style=for-the-badge&logo=letsencrypt&logoColor=white)
 
----
+--- 
 
 ## Screenshots
 
