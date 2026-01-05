@@ -301,7 +301,7 @@ secrets:
 
 # Monitoring Configuration (updated)
 monitoring:
-  enabled: false  # Disabled - CRDs not installed in K3s cluster
+  enabled: true  # Enabled - CRDs installed by kube-prometheus-stack
   serviceMonitor:
     enabled: true
     interval: 30s
